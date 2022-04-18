@@ -1,0 +1,6 @@
+version: '3'
+services:
+  chatbot:
+    image: 7940image
+    # missing instructions for setting environment variable
+    # missing instructions for setting the entrypoint and/or command

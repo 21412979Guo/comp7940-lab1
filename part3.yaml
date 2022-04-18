@@ -1,0 +1,16 @@
+version: '3'
+services:
+  chatbot:
+    image: 7940image
+    # missing instructions for setting environment variable
+    # missing instructions for setting the entrypoint and/or command
+    depends_on:
+      - redis
+  redis:
+    image: redis
+    volumes:
+       - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["/usr/local/etc/redis/redis.conf"]
+    HOST = redis-14356.c299.asia-northeast1-1.gce.cloud.redislabs.com
+    PASSWORD = SsjeW0l10WKe0kqqLLi6FZSDfJEfpCu0
+    REDISPORT = 14356
