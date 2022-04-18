@@ -29,9 +29,9 @@ def main():
     dispatcher.add_handler(echo_handler)
 
     # on different commands - answer in Telegram
-    dispatcher.add_handler(CommandHandler("add", add))
     dispatcher.add_handler(CommandHandler("help", help_command))
-    dispatcher.add_handler(CommandHandler("hello", hello))
+    dispatcher.add_handler(CommandHandler("Link", Link))
+    dispatcher.add_handler(CommandHandler("Review", review))
     
 
 
@@ -47,33 +47,38 @@ def echo(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text= reply_message)
 
 
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
     update.message.reply_text('Helping you helping you.')
 
 
-def add(update: Update, context: CallbackContext) -> None:
+def review(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /add is issued."""
     try: 
         global redis1
         logging.info(context.args[0])
-        msg = context.args[0]   # /add keyword <-- this should store the keyword
+        msg = context.args[0]
         redis1.incr(msg)
-        update.message.reply_text('You have said ' + msg +  ' for ' + redis1.get(msg).decode('UTF-8') + ' times.')
+        update.message.reply_text('Here is the review https://www.rottentomatoes.com/m/' + msg)
     except (IndexError, ValueError):
-        update.message.reply_text('Usage: /add <keyword>')
+        update.message.reply_text('Usage: /review <keyword and space with _>')
 
-def hello(update: Update, context: CallbackContext) -> None:
+def Link(update: Update, context: CallbackContext) -> None:
     try: 
         global redis1
         logging.info(context.args[0])
-        msg = context.args[0]   # /add keyword <-- this should store the keyword
+        msg = context.args[0]
         redis1.incr(msg)
-        update.message.reply_text('Good day, ' + msg +  '!')
+        if msg == 'Youtube':
+            update.message.reply_text('Here is the link: https://www.youtube.com/ !')
+        elif msg == 'Netflix':
+            update.message.reply_text('Here is the link: https://www.netflix.com/ !')
+        elif msg == 'Bilibili':
+            update.message.reply_text('Here is the link: https://www.bilibili.com/ !')
+        elif msg == 'Disney+':
+            update.message.reply_text('Here is the link: https://www.disneyplus.com/ !')
     except (IndexError, ValueError):
-        update.message.reply_text('Usage: /hello <keyword>')
+        update.message.reply_text('Usage: /link <Youtube/Netflix/Bilibili/Disney+>')
 
 
 if __name__ == '__main__':
