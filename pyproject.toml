@@ -1,0 +1,11 @@
+[tool]
+[tool.poetry]
+authors = ["Your Name <you@example.com>"]
+description = ""
+name = "tg-bot-demo"
+version = "0.1.0"
+[tool.poetry.dependencies]
+configparser = "*"
+python-telegram-bot = "^13.1"
+redis = "*"
+flask = "*"

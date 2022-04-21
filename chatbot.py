@@ -2,6 +2,8 @@
 '''check workflow'''
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from flask import Flask
+from threading import Thread
 
 import configparser
 import logging
@@ -9,12 +11,19 @@ import redis
 
 global redis1
 
+app = Flask('')
+
+@app.route('/')
+def index():
+    return "<h1>Bot is running</h1>"
+
 def main():
+    Thread(target=app.run,args=("0.0.0.0",8080)).start()
     # Load your token and create an Updater for your Bot
     
     config = configparser.ConfigParser()
     config.read('config.ini')
-    updater = Updater(token=(config['TELEGRAM']['ACCESS_TOKEN']), use_context=True, request_kwargs = {'proxy_url': 'http://127.0.0.1:10809/' })
+    updater = Updater(token=(config['TELEGRAM']['ACCESS_TOKEN']), use_context=True)
     dispatcher = updater.dispatcher
 
     global redis1
